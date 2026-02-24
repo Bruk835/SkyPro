@@ -1,6 +1,7 @@
 from masks import get_mask_account, get_mask_card_number
 
-def mask_account_card (incoming_data: str) -> str:
+
+def mask_account_card(incoming_data: str) -> str:
     """Функция, маскирующая номер счёта или карты"""
 
     data_split = incoming_data.split()

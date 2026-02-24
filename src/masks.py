@@ -19,7 +19,7 @@ def get_mask_card_number(card_number: Union[int, str], count_mask=6) -> str:
 def get_mask_account(account_number: Union[int, str], count_mask=2) -> str:
     """Функция вывода номера счёта, в котором часть числовых значений принимают символ "*" """
 
-    # Преобразло в строку, start_уем чисidесли это необходимо
+    # Преобразуем число в строку, если необходимо
     account_number = str(account_number)
 
     masked = '*' * count_mask + account_number[-4:]
