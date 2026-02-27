@@ -1,7 +1,8 @@
 from typing import Dict
 from typing import List
 
-def filter_by_state (dict_base: List[Dict], state: str = 'EXECUTED') -> List[Dict]:
+
+def filter_by_state(dict_base: List[Dict], state: str = 'EXECUTED') -> List[Dict]:
     """Функция сортировки операций по статусу, по умолчании статус операции EXECUTED"""
 
     filter_dicts = []
