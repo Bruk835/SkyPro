@@ -1,7 +1,7 @@
-from typing import Union
+from typing import Union, Any
 
 
-def get_mask_card_number(card_number: Union[int, str], count_mask=6) -> str:
+def get_mask_card_number(card_number: Union[int, str], count_mask: int=6) -> str:
     """Функция вывода номера карты, в котором часть числовых значений принимают символ "*" """
 
     # Преобразуем число в строку, если это необходимо
@@ -16,7 +16,7 @@ def get_mask_card_number(card_number: Union[int, str], count_mask=6) -> str:
     return result
 
 
-def get_mask_account(account_number: Union[int, str], count_mask=2) -> str:
+def get_mask_account(account_number: Any, count_mask: int=2) -> Any:
     """Функция вывода номера счёта, в котором часть числовых значений принимают символ "*" """
 
     # Преобразуем число в строку, если необходимо
