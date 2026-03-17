@@ -2,7 +2,7 @@ from typing import List, Dict, Iterator
 
 
 def filter_by_currency(dict_base: List[Dict], currency: str) -> Iterator[Dict]:
-    """Функция фильтрации операций по типу валюты"""
+    """Функция-генератор фильтрации операций по типу валюты"""
 
     if not dict_base:
         raise ValueError("Ошибка ввода данных")
