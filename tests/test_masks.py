@@ -7,11 +7,14 @@ def test_mask_card(three_letters_str: str, empty_str: str) -> None:
     assert get_mask_card_number(empty_str) == "Ошибка ввода, введите 16 цифровых значений"
 
 
-@pytest.mark.parametrize("input_data, expected", [("002436 000000000", "Ошибка ввода, введите 16 цифровых значений"),
-                                                  ("asdfghjklzxcvbnm", "Ошибка ввода, введите 16 цифровых значений"),
-                                                  ("1234567890123456", "1234 56** **** 3456")])
-
-
+@pytest.mark.parametrize(
+    "input_data, expected",
+    [
+        ("002436 000000000", "Ошибка ввода, введите 16 цифровых значений"),
+        ("asdfghjklzxcvbnm", "Ошибка ввода, введите 16 цифровых значений"),
+        ("1234567890123456", "1234 56** **** 3456"),
+    ],
+)
 def test_mask_card_2(input_data: str, expected: str) -> None:
     assert get_mask_card_number(input_data) == expected
 
