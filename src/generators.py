@@ -1,24 +1,32 @@
 from typing import List, Dict, Iterator
 
-def filter_by_currency(dict_base: List[Dict], currency: str)-> Iterator[Dict]:
-    """Функция фильтрации операций по типу валюты """
 
+def filter_by_currency(dict_base: List[Dict], currency: str) -> Iterator[Dict]:
+    """Функция фильтрации операций по типу валюты"""
+
+    if not dict_base:
+        raise ValueError("Ошибка ввода данных")
     for transaction in dict_base:
         if transaction.get("operationAmount", {}).get("currency", {}).get("code") == currency:
             yield transaction
 
 
-def transaction_descriptions(dict_base: List[Dict])-> Iterator[str]:
+def transaction_descriptions(dict_base: List[Dict]) -> Iterator[str]:
     """Генератор описания операций"""
+
+    if not dict_base:
+        raise ValueError("Ошибка ввода данных")
     for i, operation in enumerate(dict_base):
         description = operation.get("description")
         if description is None:
             print(f"Предупреждение: в транзакции {i} нет описания")
-            continue  # пропускаем эту транзакцию
+            continue
         yield description
+
 
 def card_number_generator(start: int, end: int) -> Iterator[str]:
     """Генератор номеров банковских карт"""
+
     if start < 1 or end > 9999999999999999:
         raise ValueError("Номер карты должен быть от 0000000000000001 до 9999999999999999")
 
