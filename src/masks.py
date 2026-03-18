@@ -1,4 +1,4 @@
-from typing import Union, Any
+from typing import Any, Union
 
 
 def get_mask_card_number(card_number: Union[int, str], count_mask: int = 6) -> str:
