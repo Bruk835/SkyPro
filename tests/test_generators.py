@@ -1,6 +1,8 @@
+from typing import Dict, List
+
 import pytest
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
-from typing import List, Dict
+
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 def test_filter_curr_empty_list() -> None:
