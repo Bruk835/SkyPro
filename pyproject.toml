@@ -21,6 +21,9 @@ lint = [
     "black (>=26.1.0,<27.0.0)",
     "isort (>=7.0.0,<8.0.0)"
 ]
+dev = [
+    "pytest-cov (>=7.0.0,<8.0.0)"
+]
 
 
 [tool.black]
@@ -35,7 +38,7 @@ exclude = """
 
 
 [tool.isort]
-line-length = 119
+line_length = 119
 
 
 [settings]
