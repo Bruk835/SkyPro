@@ -20,7 +20,8 @@ def test_filter_curr_empty_list() -> None:
     ],
 )
 def test_filter_curr_mult_curr(
-        transactions: List[Dict], currency: str, expected_count: int, expected_ids: str) -> None:
+    transactions: List[Dict], currency: str, expected_count: int, expected_ids: str
+) -> None:
     """Параметризованный тест для разных валют"""
     generator = filter_by_currency(transactions, currency)
     result = list(generator)
