@@ -22,6 +22,7 @@ def test_log_error_to_console(capsys: CaptureFixture[str]) -> None:
     @log()  # type: ignore[call-arg]
     def error_func() -> None:
         raise ValueError("Test error message")
+
     with pytest.raises(ValueError, match="Test error message"):
         error_func()
 
@@ -37,6 +38,7 @@ def test_log_error_with_args_to_console(capsys: CaptureFixture[str]) -> None:
     @log()  # type: ignore[call-arg]
     def divide(a: int, b: int) -> int:
         return a // b
+
     with pytest.raises(ZeroDivisionError):
         divide(9, 0)
 
