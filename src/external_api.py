@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 API_KEY = os.getenv("EXCHANGE_API_KEY")
-BASE_URL = "https://api.apilayer.com/exchangerates_data"
+BASE_URL = "https://api.apilayer.com/exchangerates_data/convert"
 
 
 @lru_cache(maxsize=100)

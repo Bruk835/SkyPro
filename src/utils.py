@@ -23,6 +23,9 @@ def load_transactions(file_path: Any) -> Any:
 
         return data
 
+    except FileNotFoundError as e:
+        print(f"Ошибка: {e}")
+        return []
     except (json.JSONDecodeError, IOError) as e:
         print(f"Ошибка при чтении файла: {e}")
         return []
