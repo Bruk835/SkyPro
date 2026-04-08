@@ -28,7 +28,7 @@ def get_exchange_rate(currency: str) -> float:
     if not API_KEY:
         raise Exception("API ключ не найден. Установите EXCHANGE_API_KEY в .env файле")
 
-    url = f"{BASE_URL}/convert"
+    url = f"{BASE_URL}"
 
     headers = {"apikey": API_KEY}
 
