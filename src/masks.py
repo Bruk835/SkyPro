@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Union
 
-logger = logging.getLogger('masks')
+logger = logging.getLogger("masks")
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler("../logs/masks.log")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
@@ -30,7 +30,7 @@ def get_mask_card_number(card_number: Union[int, str], count_mask: int = 6) -> s
         else:
             masked = card_number[:6] + "*" * count_mask + card_number[-4:]
             # Разбиваем на блоки по 4 символа
-            blocks = [masked[i:i + 4] for i in range(0, len(masked), 4)]
+            blocks = [masked[i : i + 4] for i in range(0, len(masked), 4)]
             # Объединяем блоки с пробелами
             result = " ".join(blocks)
             logger.info(f"Карта замаскирована: {card_number} -> {result}")

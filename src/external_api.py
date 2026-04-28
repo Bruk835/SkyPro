@@ -1,5 +1,5 @@
+import json
 import os
-from functools import lru_cache
 
 import requests
 from dotenv import load_dotenv
@@ -8,90 +8,31 @@ from dotenv import load_dotenv
 load_dotenv()
 
 API_KEY = os.getenv("EXCHANGE_API_KEY")
-BASE_URL = "https://api.apilayer.com/exchangerates_data/convert"
 
 
-@lru_cache(maxsize=100)
-def get_exchange_rate(currency: str) -> float:
+def amount_in_rub(transaction: dict) -> float:
     """
-    Получает текущий курс валюты по отношению к рублю.
-
-    Args:
-        currency (str): Код валюты (USD, EUR)
-
-    Returns:
-        float: Курс конвертации в рубли
-
-    Raises:
-        Exception: Если API недоступен или ключ невалидный
+    Функция осуществляет конвертацию суммы каждой транзакции в эквивалент суммы в рублях"
     """
     if not API_KEY:
         raise Exception("API ключ не найден. Установите EXCHANGE_API_KEY в .env файле")
 
-    url = f"{BASE_URL}"
-
-    headers = {"apikey": API_KEY}
-
-    params = {"from": currency.upper(), "to": "RUB", "amount": 1}
-
     try:
-        response = requests.get(url, headers=headers, params=params, timeout=10)
-        response.raise_for_status()
+        amount = float(transaction["operationAmount"]["amount"])
+        trans_currency = transaction["operationAmount"]["currency"]["code"]
 
-        data = response.json()
-
-        if not data.get("success"):
-            error_msg = data.get("error", {}).get("info", "Unknown error")
-            raise Exception(f"API error: {error_msg}")
-
-        return float(data["result"])
+        if trans_currency != "RUB":
+            url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={trans_currency}&amount={amount}"
+            payload: dict = {}
+            headers: dict = {"apikey": API_KEY}
+            response = requests.request("get", url=url, headers=headers, data=payload)
+            result = json.loads(response.text)
+            amount_rub = float(result["result"])
+            return amount_rub
+        else:
+            return amount
 
     except requests.exceptions.RequestException as e:
         raise Exception(f"Ошибка при обращении к API: {e}")
     except (KeyError, ValueError) as e:
         raise Exception(f"Ошибка парсинга ответа API: {e}")
-
-
-def convert_to_rub(transaction: dict) -> float:
-    """
-    Конвертирует сумму транзакции в рубли.
-
-    Args:
-        transaction (dict): Словарь с данными транзакции,
-                           содержащий ключи 'amount' и 'currency'
-
-    Returns:
-        float: Сумма в рублях
-
-    Raises:
-        ValueError: Если валюта не поддерживается или отсутствуют поля
-        Exception: При ошибке конвертации через API
-    """
-    # Проверка наличия обязательных полей
-    if "amount" not in transaction:
-        raise ValueError("Транзакция не содержит поле 'amount'")
-
-    if "currency" not in transaction:
-        raise ValueError("Транзакция не содержит поле 'currency'")
-
-    amount = transaction["amount"]
-    currency = transaction["currency"].upper()
-
-    # Проверка типа суммы
-    if not isinstance(amount, (int, float)):
-        raise ValueError(f"Сумма должна быть числом, получено: {type(amount).__name__}")
-
-    # Если транзакция уже в рублях
-    if currency == "RUB":
-        return float(amount)
-
-    # Конвертация для USD и EUR
-    if currency in ("USD", "EUR"):
-        try:
-            exchange_rate = get_exchange_rate(currency)
-            return float(amount * exchange_rate)
-        except Exception as e:
-            raise Exception(f"Ошибка конвертации {currency} в RUB: {e}")
-
-    # Неподдерживаемая валюта
-    raise ValueError(f"Неподдерживаемая валюта: {currency}. Поддерживаются: RUB, USD, EUR")

@@ -1,9 +1,9 @@
 import json
-import os
 import logging
+import os
 from typing import Any
 
-logger = logging.getLogger('utils')
+logger = logging.getLogger("utils")
 logger.setLevel(logging.INFO)
 file_handler = logging.FileHandler("../logs/utils.log")
 file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s: %(message)s")
